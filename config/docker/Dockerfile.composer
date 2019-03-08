@@ -1,0 +1,5 @@
+FROM composer:1.7.3 AS composer
+
+COPY . /app
+
+RUN composer install --working-dir=/app

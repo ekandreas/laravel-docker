@@ -1,0 +1,16 @@
+ARG BUILDER_COMPOSER=composer
+FROM ${BUILDER_COMPOSER} as composer
+
+FROM nginx:1.15.8-alpine
+
+RUN rm -rf /etc/nginx/nginx.conf
+COPY /public /var/www/public
+RUN mv /etc/nginx/mime.types /etc/mime.types
+RUN mv /etc/nginx/fastcgi_params /etc/fastcgi_params
+
+# Composer installed dependencies and plugins
+#COPY --from=composer /app/web/app/ /var/www/web/app
+
+WORKDIR /var/www/public
+
+EXPOSE 8080
